@@ -365,7 +365,7 @@ class GDScriptClasses(list):
             groups.append(list(group))
         return groups
 
-    def get_grouped_by_categoryu(self) -> List[List[GDScriptClass]]:
+    def get_grouped_by_category(self) -> List[List[GDScriptClass]]:
         """
         Returns a list of lists of GDScriptClass objects, 
         grouped by their `category` attribute.
