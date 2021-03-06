@@ -1,0 +1,114 @@
+{
+  "name": "Not Another Platformer",
+  "description": "Joint Project between J D Webster and D S Webster",
+  "version": null,
+  "classes": [
+    {
+      "name": "api_doc_example",
+      "path": "res://docs/source/standards/example.gd",
+      "extends_class": [
+        "Node2D"
+      ],
+      "extends_file": "",
+      "icon": "",
+      "signature": "class api_doc_example",
+      "description": " This is a dummy file for demonstrating the format of the\n commenting to provide automatic API documentation from Godot\n\n A comment at the start of the file is used a the description\n for the class and can have multiple sections provided the comment\n does not break as this comments is so far.\n \n In order for the documentation to be generated the .gd file\n must have class_name defined\n",
+      "sub_classes": [
+
+      ],
+      "constants": [
+        {
+          "name": "GRAVITY",
+          "value": 9.81,
+          "data_type": "float",
+          "signature": "const GRAVITY: float = 9.81",
+          "description": " The gravity is a constant \n"
+        }
+      ],
+      "members": [
+        {
+          "name": "a_global_boolean",
+          "data_type": "bool",
+          "default_value": true,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var a_global_boolean: bool = true",
+          "description": " Global properties can be documented using comments before the property\n This is a global boolean value\n"
+        },
+        {
+          "name": "property_d",
+          "data_type": "int",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var property_d: int",
+          "description": " but be careful as the comment attaches to the next property\n and the order of property printing is not defined.\n"
+        },
+        {
+          "name": "property_a",
+          "data_type": "Vector2",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var property_a: Vector2",
+          "description": ""
+        },
+        {
+          "name": "property_z",
+          "data_type": "float",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var property_z: float",
+          "description": ""
+        }
+      ],
+      "signals": [
+
+      ],
+      "methods": [
+        {
+          "name": "hello_world",
+          "return_type": "bool",
+          "rpc_mode": 0,
+          "signature": "func hello_world(text: String, upper_case: bool) -> bool",
+          "description": " This is a function comment that will be included in the\n API docs as the comment block immediately precedes the\n function declaration.  All paramenters and return type \n are also included.\n\n Function to print out a message in either upper of lower case\n",
+          "arguments": [
+            {
+              "name": "text",
+              "type": "String"
+            },
+            {
+              "name": "upper_case",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "name": "add_two_digits",
+          "return_type": "int",
+          "rpc_mode": 0,
+          "signature": "func add_two_digits(digit1: int, digit2: int) -> int",
+          "description": "",
+          "arguments": [
+            {
+              "name": "digit1",
+              "type": "int"
+            },
+            {
+              "name": "digit2",
+              "type": "int"
+            }
+          ]
+        }
+      ],
+      "static_functions": [
+
+      ]
+    }
+  ]
+}
