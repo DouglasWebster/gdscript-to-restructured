@@ -24,7 +24,8 @@ scratchpad/
 # doc ignores
 docs/build/
 docs/source/module_exports/
-docs/source/reference.json
+**/export
+**/reference.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
