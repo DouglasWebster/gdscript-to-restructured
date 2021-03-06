@@ -129,15 +129,43 @@ def _write(
     return restructured
 
 def _write_signals(classes:GDScriptClasses, gdscript: GDScriptClass) -> List[str]:
-    pass
+    return wrap_in_newlines(
+        [
+            "- {}: {}".format(
+                s.signature, _replace_references(classes, gdscript, s.description)
+            )
+            for s in gdscript.signals
+        ]
+    )
 
 
 def _write_index_page(classes: GDScriptClasses, info: ProjectInfo) -> RestructuredDocument:
-    pass
-
+    title: str = "{} ({})".format(info.name, surround_with_html(info.version, "small"))
+    content: List[str] =[
+        *RestructuredSection(title, 1, [info.description]).as_text(),
+        *RestructuredSection("Contents", 2, _write_table_of_contents(classes)).as_text()
+    ]
+    return RestructuredDocument("index", content)
 
 def _write_table_of_contents(classes: GDScriptClasses) -> List[str]:
-    pass
+    toc: List[str] = []
+
+    by_category = classes.get_grouped_by_category()
+
+    for group in by_category:
+        indent: str =""
+        first_class: GDScriptClass =group[0]
+        category: str = first_class.category
+        if category:
+            toc.append("- {}".format(make_bold(category)))
+            indent = "   "
+
+        for gdscript_class in group:
+            link: str = indent + "- " + make_link(
+                gdscript_class.name, gdscript_class.name
+            )
+            toc.append(link)
+    return toc
 
 
 def _replace_references(
