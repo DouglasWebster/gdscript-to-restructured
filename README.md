@@ -25,7 +25,8 @@ which should display
 ```
 usage: gdscript-rest-maker [-h] [-p PATH] [-i] [-v] [--dry-run] [-V] files [files ...]
 
-Converts JSON data dumped by Godot's GDScript language server to create .rst files for use with Sphinx.
+Converts JSON data dumped by Godot's GDScript language server to create .rst files for 
+use with Sphinx.
 
 positional arguments:
   files                 A list of paths to JSON files.
@@ -33,8 +34,10 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
   -p PATH, --path PATH  Path to the output directory.
-  -i, --make-index      If this flag is present, create and index.rst page with a table of contents.
-  -v, --verbose         Set the verbosity level. For example -vv sets verbosity to level 2. Defalt: 0.
-  --dry-run             Run the script at max verbosity without creating files. For debuggin puposese.
+  -i, --make-index      If this flag is present, create an index.rst page with a table of contents.
+  -v, --verbose         Set the verbosity level. For example -vv sets verbosity to level 2. 
+                        (Default: 0.)
+  --dry-run             Run the script at max verbosity without creating files.
+                        (For debuggin puposese.)
   -V, --version         Print the version number and exit,
   ```
