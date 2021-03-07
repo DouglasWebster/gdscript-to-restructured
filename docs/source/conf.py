@@ -17,12 +17,9 @@ import sys
 
 # -- Project information -----------------------------------------------------
 
-project = 'Not Another Platformer'
-copyright = '2021, Jonathan D Webster, Douglas S Webster'
-author = 'Jonathan D Webster, Douglas S Webster'
-
-# The full version, including alpha/beta/rc tags
-release = '0.1.0'
+project = 'GDScript to reStructured'
+copyright = '2021, Douglas S Webster'
+author = 'Douglas S Webster'
 
 # The full version, including alpha/beta/rc tags
 version = '0.0.1'
@@ -110,19 +107,6 @@ source_encoding = 'utf-8-sig'
 # The master toctree document
 master_doc = 'index'
 
-# General information about the project
-project = "Not Another Platformer"
-copyright = (
-    "2020 -2021, Jonathan Webster, Douglas Webster"
-)
-author = "Jonathan Webster, Douglas Webster"
-
-# Version info for the project, acts as replacement for |version| and |release|
-# The short X.Y version
-version = os.getenv("READTHEDOCS_VERSION", "latest")
-# The full version, including alpha/beta/rc tags
-release = version
-
 # Parse Sphinx tags passed from RTD via environment
 env_tags = os.getenv("SPHINX_TAGS")
 if env_tags is not None:
@@ -132,19 +116,6 @@ if env_tags is not None:
 
 supported_languages = {
     "en": "Godot Engine (%s) documentation in English",
-    "de": "Godot Engine (%s) Dokumentation auf Deutsch",
-    "es": "Documentación de Godot Engine (%s) en español",
-    "fr": "Documentation de Godot Engine (%s) en français",
-    "fi": "Godot Engine (%s) dokumentaatio suomeksi",
-    "it": "Godot Engine (%s) documentazione in italiano",
-    "ja": "Godot Engine (%s)の日本語のドキュメント",
-    "ko": "Godot Engine (%s) 문서 (한국어)",
-    "pl": "Dokumentacja Godot Engine (%s) w języku polskim",
-    "pt_BR": "Documentação da Godot Engine (%s) em Português Brasileiro",
-    "ru": "Документация Godot Engine (%s) на русском языке",
-    "uk": "Документація до Godot Engine (%s) українською мовою",
-    "zh_CN": "Godot Engine (%s) 简体中文文档",
-    "zh_TW": "Godot Engine (%s) 正體中文 (台灣) 文件",
 }
 
 language = os.getenv("READTHEDOCS_LANGUAGE", "en")
@@ -188,7 +159,6 @@ html_theme = 'sphinx_rtd_theme'
 # so a file named "default.css" will overwrite the builtin "default.css".
 
 html_static_path = ['_static']
-html_extra_path = ["robots.txt"]
 
 # These paths are either relative to html_static_path
 # or fully qualified paths (eg. https://...)
