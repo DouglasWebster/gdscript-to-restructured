@@ -21,9 +21,6 @@ GDScript reStructured document maker
    :maxdepth: 1
    :caption: API
 
-   module_exports/SplashScreen
-   module_exports/BlueSquare
-
 
 
 Indices and tables
