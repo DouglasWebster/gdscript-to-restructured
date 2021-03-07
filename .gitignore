@@ -27,6 +27,9 @@ docs/source/module_exports/
 **/export
 **/reference.json
 
+# reStructured extension ignores
+**/_build
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
