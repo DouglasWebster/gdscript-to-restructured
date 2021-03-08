@@ -14,18 +14,17 @@ GDScript reStructured document maker
    :maxdepth: 1
    :caption: Standards
 
-   standards/test_layout
-   standards/coding-standards
-
 .. toctree::
    :maxdepth: 1
    :caption: API
 
+   export/CharacterClass
+   export/CharacterHelpers
+   export/Welcome
 
+..  Indices and tables
+    ==================
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   * :ref:`genindex`
+   * :ref:`modindex`
+   * :ref:`search`
