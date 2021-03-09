@@ -9,8 +9,8 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Reference",
-"class": "CharacterClass",
+"base": "KinematicBody",
+"class": "Character",
 "language": "GDScript",
 "path": "res://Characters/player.gd"
 }, {
@@ -25,7 +25,7 @@ _global_script_classes=[ {
 "path": "res://welcome.gd"
 } ]
 _global_script_class_icons={
-"CharacterClass": "",
+"Character": "",
 "CharacterHelpers": "",
 "Welcome": ""
 }
