@@ -31,6 +31,9 @@ func find_files(
 	var file_name := directory.get_next()
 	var subdirectories := PoolStringArray()
 	while file_name != "":
+		if file_name == "Collector.gd" or file_name == "ReferenceCollectorCLI.gd":
+			file_name =directory.get_next()
+			continue
 		if directory.current_is_dir() and is_recursive:
 			var subdirectory := dirpath.plus_file(file_name)
 			file_paths.append_array(find_files(subdirectory, patterns, is_recursive))
