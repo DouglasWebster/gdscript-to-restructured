@@ -106,7 +106,11 @@ def _write_class(
 
 
 def _writ_summary(gdscript: GDScriptClass, key: str) -> List[str]:
-    pass
+    element_list = getattr(gdscript, key)
+    if not element_list:
+        return []
+    restructured: List[str] = make_table_header(["Type", "Name"])
+    return restructured + [make_table_row(item.summerize()) for item in element_list]
 
 
 def _write(
