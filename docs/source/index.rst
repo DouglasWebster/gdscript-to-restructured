@@ -18,9 +18,10 @@ GDScript reStructured document maker
    :maxdepth: 1
    :caption: API
 
-   export/CharacterClass
-   export/CharacterHelpers
-   export/Welcome
+   api/index
+   api/Character
+   api/CharacterHelpers
+   api/Welcome
 
 ..  Indices and tables
     ==================
