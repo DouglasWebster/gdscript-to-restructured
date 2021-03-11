@@ -40,8 +40,7 @@ def main():
                 data["version"] = args.doc_version
 
             project_info: ProjectInfo = ProjectInfo.from_dict(data)
-            if project_info.version == None:
-                project_info.version =="0.0.0"
+
             classes: GDScriptClasses = GDScriptClasses.from_dict_list(data["classes"])
             classes_count: int = len(classes)
 
