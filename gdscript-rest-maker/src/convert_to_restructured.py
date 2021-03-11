@@ -144,9 +144,10 @@ def _write_signals(classes:GDScriptClasses, gdscript: GDScriptClass) -> List[str
 
 
 def _write_index_page(classes: GDScriptClasses, info: ProjectInfo) -> RestructuredDocument:
-    title: str = "{} ({})".format(info.name, surround_with_html(info.version, "small"))
+    title: str = "{}".format(info.name)
+    version: str = "Version: {}".format(info.version)
     content: List[str] =[
-        *RestructuredSection(title, 1, [info.description]).as_text(),
+        *RestructuredSection(title, 1, [version] + [""] + [info.description]).as_text(),
         *RestructuredSection("Contents", 2, _write_table_of_contents(classes)).as_text()
     ]
     return RestructuredDocument("index", content)
