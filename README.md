@@ -40,4 +40,7 @@ optional arguments:
   --dry-run             Run the script at max verbosity without creating files.
                         (For debuggin puposese.)
   -V, --version         Print the version number and exit,
-  ```
+ --doc-version DOC_VERSION
+                        Set the document version number if there is no version set in the JSON file. 
+                        Defaults to 0.0.0
+ ```
