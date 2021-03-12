@@ -384,7 +384,7 @@ class GDScriptClasses(list):
     @staticmethod
     def from_dict_list(data: List[dict]):
         return GDScriptClasses(
-            [GDScriptClass.from_dict(entry) for entry in data if "name" in entry]
+            [GDScriptClass.from_dict(entry) for entry in data if entry["name"] != ""]
         )
 
 

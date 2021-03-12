@@ -172,6 +172,8 @@ html_theme_options = {
     'collapse_navigation': False
 }
 
+html_logo = "docs_logo.png"
+
 latex_elements = {
     'extraclassoptions': 'openany',
     'preamble': r'''
