@@ -19,9 +19,6 @@ GDScript reStructured document maker
    :caption: API
 
    api/index
-   api/Character
-   api/CharacterHelpers
-   api/Welcome
 
 ..  Indices and tables
     ==================
