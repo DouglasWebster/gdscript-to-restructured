@@ -78,7 +78,7 @@ def _as_restructured(
     for cls in gdscript.sub_classes:
         content += _write_class(classes, cls, 3, True)
 
-    return RestructuredDocument(gdscript.name, content)
+    return RestructuredDocument(gdscript.name, doc_ref, content)
 
     
     
@@ -154,7 +154,7 @@ def _write_index_page(classes: GDScriptClasses, info: ProjectInfo) -> Restructur
         *RestructuredSection(title, 1, [version] + [""] + [info.description]).as_text(),
         *RestructuredSection("Contents", 2, _write_table_of_contents(classes)).as_text()
     ]
-    return RestructuredDocument("index", content)
+    return RestructuredDocument("index", "", content)
 
 def _write_table_of_contents(classes: GDScriptClasses) -> List[str]:
     toc: List[str] = []
