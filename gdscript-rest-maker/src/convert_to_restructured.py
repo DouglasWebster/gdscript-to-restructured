@@ -43,6 +43,9 @@ def _as_restructured(
     content: List[str] = []
 
     name: str = gdscript.name
+
+    doc_ref: str = "class_" + name.lower()
+    
     if "abstract" in gdscript.metadata.tags:
         name += " " + surround_with_html("(abstract)", "small")
 
