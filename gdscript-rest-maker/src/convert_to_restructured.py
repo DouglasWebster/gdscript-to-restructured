@@ -157,23 +157,14 @@ def _write_index_page(classes: GDScriptClasses, info: ProjectInfo) -> Restructur
     return RestructuredDocument("index", "", content)
 
 def _write_table_of_contents(classes: GDScriptClasses) -> List[str]:
-    toc: List[str] = []
+    toc: List[str] = [
+        "..  toctree::",
+        "    :maxdepth: 1",
+        "    :caption: API",
+        "    :glob:",
+        "\n    *"
+    ]
 
-    by_category = classes.get_grouped_by_category()
-
-    for group in by_category:
-        indent: str =""
-        first_class: GDScriptClass =group[0]
-        category: str = first_class.category
-        if category:
-            toc.append("- {}".format(make_bold(category)))
-            indent = "   "
-
-        for gdscript_class in group:
-            link: str = indent + "- " + make_link(
-                gdscript_class.name, gdscript_class.name
-            )
-            toc.append(link)
     return toc
 
 
