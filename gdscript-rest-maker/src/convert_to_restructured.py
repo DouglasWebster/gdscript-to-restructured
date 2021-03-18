@@ -55,7 +55,8 @@ def _as_restructured(
             "Do not edit this document directly as all changes will be\n"
             "to be overwritten on the next auto-generation." 
         )
-        + "\n"
+        + "\n\n"
+        + ".. _{}:".format(doc_ref) 
     ]
 
     content += [*make_heading(name, 1)]
