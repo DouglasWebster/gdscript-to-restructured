@@ -127,7 +127,8 @@ def make_link(description: str, target: str) -> str:
         print("found ref, link is {}".format(api_ref[api_key]))
         return "`{} <{}>`_".format(description, api_ref[api_key])
     else:
-        return "`{} <{}>`_".format(description, "api/" + description)
+        link_target = "class_" + description.lower()
+        return ":ref:`{} <{}>`".format(description, link_target)
 
 
 def make_list(
