@@ -43,10 +43,8 @@ needs_sphinx = '3.0'
 sys.path.append(os.path.abspath("_extensions"))
 
 extensions = [
-    'sphinx_rtd_theme',
     'sphinx_tabs.tabs',
     "notfound.extension",
-#    'm2r',
 ]
 
 # Warning when the Sphinx Tabs extension is used with unknown
