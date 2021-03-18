@@ -14,6 +14,7 @@ with open("godot_api_calls.json", "r") as api_json:
 @dataclass
 class RestructuredDocument:
     title: str
+    doc_ref: str
     content: List[str]
 
     def get_filename(self):
@@ -28,8 +29,8 @@ class RestructuredDocument:
         return re.sub(r"\n\n+", "\n\n", text)
 
     def __repr__(self):
-        return "RestructuredDocument(title={}, content={})".format(
-            self.title, "\\n".join(self.content)[:120] + "..."
+        return "RestructuredDocument(title={}, doc_ref={} content={})".format(
+            self.title, self.doc_ref,  "\\n".join(self.content)[:120] + "..."
         )
 
 
