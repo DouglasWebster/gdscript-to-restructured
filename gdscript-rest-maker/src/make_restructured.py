@@ -1,13 +1,20 @@
 """General functions and utilities to write reStructured documents.
 """
 import re
+import json
 from dataclasses import dataclass
 from typing import List, Any
 
+api_ref = {}
 
+with open("godot_api_calls.json", "r") as api_json:
+    api_ref: list = json.loads(api_json.read())
+    print("api_ref is {}".format(type(api_ref)))
+    
 @dataclass
 class RestructuredDocument:
     title: str
+    doc_ref: str
     content: List[str]
 
     def get_filename(self):
@@ -22,8 +29,8 @@ class RestructuredDocument:
         return re.sub(r"\n\n+", "\n\n", text)
 
     def __repr__(self):
-        return "RestructuredDocument(title={}, content={})".format(
-            self.title, "\\n".join(self.content)[:120] + "..."
+        return "RestructuredDocument(title={}, doc_ref={} content={})".format(
+            self.title, self.doc_ref,  "\\n".join(self.content)[:120] + "..."
         )
 
 
@@ -115,7 +122,13 @@ def make_code_block(text: str, language: str = "gdscript") -> str:
 
 
 def make_link(description: str, target: str) -> str:
-    return "`{} <{}>`_".format(description, target)
+    api_key: str = description.lower()
+    if api_key in api_ref:
+        print("found ref, link is {}".format(api_ref[api_key]))
+        return "`{} <{}>`_".format(description, api_ref[api_key])
+    else:
+        link_target = "class_" + description.lower()
+        return ":ref:`{} <{}>`".format(description, link_target)
 
 
 def make_list(

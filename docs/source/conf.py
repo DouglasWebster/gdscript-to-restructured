@@ -45,7 +45,6 @@ sys.path.append(os.path.abspath("_extensions"))
 extensions = [
     'sphinx_tabs.tabs',
     "notfound.extension",
-#    'm2r',
 ]
 
 # Warning when the Sphinx Tabs extension is used with unknown
@@ -93,11 +92,6 @@ if not os.getenv("SPHINX_NO_DESCRIPTIONS"):
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
-
-# List of patterns, relative to source directory, that match files and
-# directories to ignore when looking for source files.
-# This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = []
 
 # You can specify multiple suffix as a list of string: ['.rst', '.md']
 # source_suffix = ['.rst', '.md']
@@ -175,6 +169,8 @@ html_theme_options = {
     'logo_only': True,
     'collapse_navigation': False
 }
+
+html_logo = "docs_logo.png"
 
 latex_elements = {
     'extraclassoptions': 'openany',

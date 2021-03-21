@@ -43,6 +43,9 @@ def _as_restructured(
     content: List[str] = []
 
     name: str = gdscript.name
+
+    doc_ref: str = "class_" + name.lower()
+    
     if "abstract" in gdscript.metadata.tags:
         name += " " + surround_with_html("(abstract)", "small")
 
@@ -52,7 +55,8 @@ def _as_restructured(
             "Do not edit this document directly as all changes will be\n"
             "to be overwritten on the next auto-generation." 
         )
-        + "\n"
+        + "\n\n"
+        + ".. _{}:".format(doc_ref) 
     ]
 
     content += [*make_heading(name, 1)]
@@ -74,7 +78,7 @@ def _as_restructured(
     for cls in gdscript.sub_classes:
         content += _write_class(classes, cls, 3, True)
 
-    return RestructuredDocument(gdscript.name, content)
+    return RestructuredDocument(gdscript.name, doc_ref, content)
 
     
     
@@ -106,7 +110,11 @@ def _write_class(
 
 
 def _writ_summary(gdscript: GDScriptClass, key: str) -> List[str]:
-    pass
+    element_list = getattr(gdscript, key)
+    if not element_list:
+        return []
+    restructured: List[str] = make_table_header(["Type", "Name"])
+    return restructured + [make_table_row(item.summerize()) for item in element_list]
 
 
 def _write(
@@ -140,31 +148,23 @@ def _write_signals(classes:GDScriptClasses, gdscript: GDScriptClass) -> List[str
 
 
 def _write_index_page(classes: GDScriptClasses, info: ProjectInfo) -> RestructuredDocument:
-    title: str = "{} ({})".format(info.name, surround_with_html(info.version, "small"))
+    title: str = "{}".format(info.name)
+    version: str = "Version: {}".format(info.version)
     content: List[str] =[
-        *RestructuredSection(title, 1, [info.description]).as_text(),
+        *RestructuredSection(title, 1, [version] + [""] + [info.description]).as_text(),
         *RestructuredSection("Contents", 2, _write_table_of_contents(classes)).as_text()
     ]
-    return RestructuredDocument("index", content)
+    return RestructuredDocument("index", "", content)
 
 def _write_table_of_contents(classes: GDScriptClasses) -> List[str]:
-    toc: List[str] = []
+    toc: List[str] = [
+        "..  toctree::",
+        "    :maxdepth: 1",
+        "    :caption: API",
+        "    :glob:",
+        "\n    *"
+    ]
 
-    by_category = classes.get_grouped_by_category()
-
-    for group in by_category:
-        indent: str =""
-        first_class: GDScriptClass =group[0]
-        category: str = first_class.category
-        if category:
-            toc.append("- {}".format(make_bold(category)))
-            indent = "   "
-
-        for gdscript_class in group:
-            link: str = indent + "- " + make_link(
-                gdscript_class.name, gdscript_class.name
-            )
-            toc.append(link)
     return toc
 
 

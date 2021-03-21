@@ -23,9 +23,10 @@ scratchpad/
 
 # doc ignores
 docs/build/
-docs/source/module_exports/
+docs/source/api/
 **/export
 **/reference.json
+**/godot_api_calls.json
 
 # reStructured extension ignores
 **/_build

@@ -4,6 +4,7 @@ classes as dictionaries into objects
 """
 
 import itertools
+from logging import debug
 import operator
 import re
 from dataclasses import dataclass
@@ -11,6 +12,7 @@ from enum import Enum
 from operator import itemgetter
 from sys import version
 from typing import List, Tuple
+import logging
 
 from .make_restructured import (make_bold, make_code_inline, make_list,
                                 surround_with_html)
@@ -39,6 +41,8 @@ BUILTIN_VIRTUAL_CALLBACKS = [
 ]
 
 TYPE_CONSTRUCTOR = "_init"
+
+LOGGER = logging.getLogger()
 
 @dataclass
 class Metadata:
@@ -355,6 +359,11 @@ class GDScriptClasses(list):
         }
 
     def _get_grouped_by(self, attribute: str) -> List[List[GDScriptClass]]:
+        LOGGER.info(
+         "GDScriptClasses._get_grouped_by checking: {}".format(type(self[0].__dict__["metadata"].category)),
+         "GDScriptClassese._get_grouped_by attribuete: {}".format(attribute) 
+        )
+        # if not self or self[0].__dict__["metadata"].category == None:
         if not self or attribute not in self[0].__dict__:
             return []
 
@@ -375,7 +384,7 @@ class GDScriptClasses(list):
     @staticmethod
     def from_dict_list(data: List[dict]):
         return GDScriptClasses(
-            [GDScriptClass.from_dict(entry) for entry in data if "name" in entry]
+            [GDScriptClass.from_dict(entry) for entry in data if entry["name"] != ""]
         )
 
 
