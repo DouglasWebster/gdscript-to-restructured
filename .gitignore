@@ -26,6 +26,7 @@ docs/build/
 docs/source/api/
 **/export
 **/reference.json
+**/godot_api_calls.json
 
 # reStructured extension ignores
 **/_build
