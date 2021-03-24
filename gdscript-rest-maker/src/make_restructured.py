@@ -79,15 +79,12 @@ def make_heading(line: str, level: int = 1) ->List[str]:
         " for paragraphs
     """
 
-    level -= 1 if level <7 else 5
+    level = 0 if level == 1 else 1
 
-    heading_markers: List[str] = ["#", "*", "=", "-", "^", "\""]
+    heading_markers: List[str] = ["=", "-" ]
     heading_marker: str = heading_markers[level] * len(line)
 
-    if level < 2:
-        return ["", heading_marker, line, heading_marker, ""]
-    else:
-        return ["", line, heading_marker, ""]
+    return ["", line, heading_marker, ""]
 
 
 def escape_markdown(text: str) -> str:
