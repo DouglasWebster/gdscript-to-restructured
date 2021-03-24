@@ -45,7 +45,6 @@ optional arguments:
                         Defaults to 0.0.0
  ```
 
- ## Additional module
- An additional `module make-godot-api-refs` is included which will generate the links required by the program so that Godot class references will open the Godot API help file.  
- 
- See the README file in the module for usage instructions.
+ ## Additional requirements
+
+In order to make the links from the Godot class names to the Godot API help files a link file has to be created and available to in the working directory of the program.  This can be accomplished by installing a small utility [godot-api-refs](https://pypi.org/project/godot-api-refs/) and running it in from the current working directory.
