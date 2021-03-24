@@ -131,6 +131,7 @@ def make_link(description: str, target: str) -> str:
         LOGGER.info(
             "found ref, link is {}".format(api_ref[api_key])
         )
+        return ":godot_class:`{}`".format(description)
     else:
         link_target = "class_" + description.lower()
         return ":ref:`{} <{}>`".format(description, link_target)

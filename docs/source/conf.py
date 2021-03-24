@@ -45,12 +45,19 @@ sys.path.append(os.path.abspath("_extensions"))
 extensions = [
     'sphinx_tabs.tabs',
     "notfound.extension",
+    "sphinx.ext.extlinks"
+
 ]
 
 # Warning when the Sphinx Tabs extension is used with unknown
 # builders (like the dummy builder) - as it doesn't cause errors,
 # we can ignore this so we still can treat other warnings as errors.
 sphinx_tabs_nowarn = True
+
+extlinks = {
+    'godot_class' : 
+        ('https://docs.godotengine.org/en/stable/classes/class_%s', '')
+}
 
 # Custom 4O4 page HTML template.
 # https://github.com/readthedocs/sphinx-notfound-page
