@@ -56,7 +56,7 @@ sphinx_tabs_nowarn = True
 
 extlinks = {
     'godot_class' : 
-        ('https://docs.godotengine.org/en/stable/classes/class_%s', '')
+        ('https://docs.godotengine.org/en/stable/classes/class_%s.html', '')
 }
 
 # Custom 4O4 page HTML template.
