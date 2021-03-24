@@ -274,15 +274,15 @@ a.btn:hover {
 }
 
 /* Style external links differently to make them easier to distinguish from internal links. */
-.reference.external {
+/* .reference.external {
     background-position: center right;
     background-repeat: no-repeat;
     background-image: var(--external-reference-icon);
     padding-right: 13px;
-}
+} */
 
 /* Distinguish class reference page links from "user manual" page links with a "ref" badge. */
-a[href*="classes/"]::before {
+/* a[href*="classes/"]::before {
     content: "ref";
     color: var(--classref-badge-text-color);
     background-color: hsla(0, 0%, 50%, 0.3);
@@ -292,20 +292,22 @@ a[href*="classes/"]::before {
     padding: 0.125rem 0.375rem;
     margin-right: 0.25rem;
 }
+*/
 
 /* Prevent the "ref" badge from appearing twice in the instant search results (not testable locally). */
-.wy-body-for-nav .search__result__single a[href*="classes/"]::before {
+/* .wy-body-for-nav .search__result__single a[href*="classes/"]::before {
     display: none;
-}
-
-.wy-body-for-nav .search__result__single a[href*="classes/"]:first-child::before {
-    display: inline;
-}
-
+    
+    .wy-body-for-nav .search__result__single a[href*="classes/"]:first-child::before {
+        display: inline;
+    }
+} 
+*/
+    
 /* Prevent the "ref" badge from appearing several times per item in the dedicated search results page. */
-#search-results .context a[href*="classes/"]::before {
+/* #search-results .context a[href*="classes/"]::before {
     display: none;
-}
+} */
 
 hr,
 #search-results .search li:first-child,
