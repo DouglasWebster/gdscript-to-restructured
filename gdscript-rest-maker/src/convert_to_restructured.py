@@ -139,8 +139,9 @@ def _write(
 def _write_signals(classes:GDScriptClasses, gdscript: GDScriptClass) -> List[str]:
     return wrap_in_newlines(
         [
-            "- {}: {}".format(
-                s.signature, _replace_references(classes, gdscript, s.description)
+            "- **{}**\n\n{}".format(
+                s.signature.split(' ', 1)[1],
+                _replace_references(classes, gdscript, s.description)
             )
             for s in gdscript.signals
         ]
