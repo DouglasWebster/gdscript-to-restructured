@@ -1,9 +1,10 @@
 """General functions and utilities to write reStructured documents.
 """
+from os import name
 import re
 import json
 from dataclasses import dataclass
-from typing import List, Any
+from typing import Dict, List, Any
 import logging
 from .config import LOG_LEVELS, LOGGER
 
@@ -152,6 +153,115 @@ def make_table_header(cells: List[str]) -> List[str]:
 
 def make_table_row(cells: List[str]) -> str:
     return " | ".join(cells)
+
+
+def make_prop_table(props: List[str], class_name: str) -> List[str]:
+    table_items: List[Dict] = []
+    exp_length: int = 0
+    type_length: int = 0
+    name_length: int = 0
+    default_length: int = 7
+    for prop in props:
+        prop_exported = "**export**" if prop.is_exported else ""
+        prop_type: str = "var" if prop.type == "var" else make_link(prop.type)
+        prop_name: str = ":ref:`{}<class_{}_property_{}>`".format(
+                                                            prop.name.lower(),
+                                                            class_name,
+                                                            prop.name.lower()
+                                                        )
+        prop_def: str = "``{}``".format(prop.default_value) if prop.default_value else ""
+        table_items.append({"exported": prop_exported, "type": prop_type, "name": prop_name, "default": prop_def})
+    
+    for item in table_items:
+        e_len = len(item["exported"]) +2
+        t_len = len(item["type"]) + 2
+        n_len = len(item["name"]) + 2
+        d_len = len(item["default"]) + 2
+        if e_len > exp_length: exp_length = e_len
+        if t_len > type_length: type_length = t_len
+        if n_len > name_length: name_length = n_len
+        if d_len > default_length: default_length = d_len
+
+    table_separator: str = "+{}+{}+{}+{}+".format(
+        "-" * exp_length, "-" * name_length, "-" * type_length, "-" * default_length
+        )
+    
+    table: List[str] =[]
+    table.append(table_separator)
+    for row in table_items:
+        item_row: str = "| {} | {} | {} | {} |".format(
+                row["exported"] + " " * (exp_length - len(row["exported"]) - 2),
+                row["name"] + " " * (name_length - len(row["name"]) - 2),
+                (row["type"] + " " * (type_length - len(row["type"]) - 2)) if row["type"] is not "var " else " var ",
+                row["default"] + " " * (default_length - len(row["default"]) - 2)
+            )
+
+        table.append(item_row)
+        table.append(table_separator)
+
+    return table
+
+
+def make_func_table(funcs: List[str], class_name: str) -> List[str]:
+    table_items: List[Dict] = []
+    ret_type_len: int = 0
+    func_call_len: int = 0
+
+    for func in funcs:
+        ret_type: str = None
+        if func.return_type == "null" or func.return_type == "void":
+            ret_type = func.return_type
+        else:
+            ret_type = make_link(func.return_type)
+        func_call: List[str] = []
+        func_call.append(":ref:`{}<class_{}_method_{}>` **(** ".format(
+                                                    func.name,
+                                                    class_name,
+                                                    func.name.lower()
+                                                    )
+                                                )
+        if func.arguments:
+            for arg in func.arguments:
+                arg_type: str = None
+                arg_default: str = None
+                if arg.type == "null" or arg_type == "void":
+                    arg_type = arg.type
+                else:
+                    arg_type = make_link(arg.type)
+                arg_default = " = {}".format(arg.default) if arg.default != "" else arg.default
+                argument: str = "{}: {}{}".format(arg.name, arg_type, arg_default)
+
+                func_call.append(argument)
+                func_call.append(", ")
+            func_call.pop() # get rid of the last comma
+        
+        func_call.append(" **)**")
+
+        table_items.append({"func_call": ''.join(func_call), "ret_type": ret_type})
+
+    for item in table_items:
+        c_len = len(item["func_call"]) +2
+        r_len = len(item["ret_type"]) + 2
+        if c_len > func_call_len: func_call_len = c_len
+        if r_len > ret_type_len: ret_type_len = r_len
+
+    table_separator: str = "+{}+{}+".format(
+        "-" * func_call_len, "-" * ret_type_len
+        )
+    
+    table: List[str] =[]
+    table.append(table_separator)
+    for row in table_items:
+        item_row: str = "| {} | {} |".format(
+                row["func_call"] + " " * (func_call_len - len(row["func_call"]) - 2),
+                row["ret_type"] + " " * (ret_type_len - len(row["ret_type"]) - 2)
+            )
+
+        table.append(item_row)
+        table.append(table_separator)
+
+    return table
+
 
 
 def make_comment(text: str) -> str:

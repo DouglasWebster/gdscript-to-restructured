@@ -15,7 +15,8 @@ from .make_restructured import (RestructuredDocument, RestructuredSection,
                                 make_bold, make_code_block, make_comment,
                                 make_heading, make_link, make_table_header,
                                 make_table_row, surround_with_html,
-                                wrap_in_newlines)
+                                wrap_in_newlines, make_prop_table,
+                                make_func_table)
 
 
 def convert_to_restructured(
@@ -62,7 +63,7 @@ def _as_restructured(
     content += [*make_heading(name, 1)]
     if gdscript.extends:
         extends_list: List[str] = gdscript.get_extends_tree(classes)
-        extends_links = [make_link(entry, "../" + entry) for entry in extends_list]
+        extends_links = [make_link(entry) for entry in extends_list]
         content += [make_bold("Extends:") + " " + " < ".join(extends_links)]
         description = _replace_references(classes, gdscript, gdscript.description)
         content += [*RestructuredSection("Description", 2, [description]).as_text()]
@@ -91,18 +92,21 @@ def _write_class(
     restructured: List[str] = []
     if is_inner_class:
         restructured += make_heading(gdscript.name, heading_level)
-    for attribute, title in [
-        ("enums", "Enumerations"),
-        ("constants", "Constants Descriptions"),
-        ("members", "Propertry Descriptions"),
-        ("functions", "Method Descriptions"),
+    for attribute, title, table in [
+        ("members", "Properties", True),
+        ("functions", "Methods", True),
+        ("signals", "Signals", False),
+        ("enums", "Enumerations", False),
+        ("constants", "Constants", False),
+        ("members", "Propertry Descriptions", False),
+        ("functions", "Method Descriptions", False),
     ]:
         if not getattr(gdscript, attribute):
             continue
         restructured += RestructuredSection(
             title,
             heading_level + 1 if is_inner_class else heading_level,
-            _write(attribute, classes, gdscript),
+            _write(attribute, classes, gdscript, table),
         ).as_text()
     return restructured
 
@@ -121,18 +125,26 @@ def _write(
     attribute: str,
     classes: GDScriptClasses,
     gdscript:GDScriptClass,
+    table: bool,
     heading_level: int = 3
 ) -> List[str]:
     assert hasattr(gdscript, attribute)
-
+    
     restructured: List[str] = []
-    for element in getattr(gdscript, attribute):
-        restructured.extend(make_heading(element.get_heading_as_string(), heading_level))
-        restructured.extend([make_code_block(element.signature), ""])
-        restructured.extend(element.get_unique_attributes_as_restructured())
-        restructured.append("")
-        description: str = _replace_references(classes, gdscript, element.description)
-        restructured.append(description)
+    if table:
+        element = getattr(gdscript, attribute)
+        if attribute == "members":
+            restructured.extend(make_prop_table(element, gdscript.name))
+        else:
+            restructured.extend(make_func_table(element, gdscript.name))
+    else:
+        for element in getattr(gdscript, attribute):
+            restructured.extend(make_heading(element.get_heading_as_string(), heading_level))
+            restructured.extend([make_code_block(element.signature), ""])
+            restructured.extend(element.get_unique_attributes_as_restructured())
+            restructured.append("")
+            description: str = _replace_references(classes, gdscript, element.description)
+            restructured.append(description)
 
     return restructured
 
