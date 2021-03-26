@@ -186,7 +186,7 @@ class Function(Element):
     def from_dict(data: dict) -> "Function":
         kind: FunctionTypes = FunctionTypes.METHOD
         if data["is_static"]:
-            king = FunctionTypes.STATIC
+            kind = FunctionTypes.STATIC
         elif data["is_virtual"]:
             kind = FunctionTypes.VIRTUAL
 
