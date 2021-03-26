@@ -122,7 +122,7 @@ def make_code_block(text: str, language: str = "gdscript") -> str:
     return "..  code-block:: {}\n\n{}\n".format(language, code)
 
 
-def make_link(description: str, target: str) -> str:
+def make_link(description: str) -> str:
     api_key: str = description.lower()
     if api_key in api_ref:
         LOGGER.info(
