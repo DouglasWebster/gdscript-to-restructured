@@ -153,6 +153,7 @@ class Argument:
 
     name: str
     type: str
+    default: str
 
 
 @dataclass
@@ -202,7 +203,10 @@ class Function(Element):
 
     @staticmethod
     def _get_arguments(data: List[dict]) -> List[Argument]:
-        return [Argument(entry["name"], entry["type"],) for entry in data]
+        for entry in data:
+            if not "default_value" in entry:
+                entry["default_value"] = ""
+            return [Argument(entry["name"], entry["type"], entry["default_value"])]
     
 
 @dataclass
