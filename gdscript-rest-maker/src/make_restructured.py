@@ -263,6 +263,55 @@ def make_func_table(funcs: List[str], class_name: str) -> List[str]:
     return table
 
 
+def make_element(attribute: str, element: List[str], class_name: str) -> List[str]:
+
+
+    switcher = {
+        "members": lambda : make_members(element, class_name),
+        "functions": lambda : make_functions(element, class_name),
+        "signals": lambda : make_signals(element, class_name),
+        "enums": lambda : make_enums(element, class_name),
+        "constants": lambda : make_constants(element, class_name),
+    }
+    return switcher.get(attribute, lambda: List("ERROR: attribute not known"))()
+
+
+def make_members(element: List[str], class_name: str) -> List[str]:
+    LOGGER.info(
+        "Making members for class {}".format(class_name)
+    )
+
+
+def make_functions(element: List[str], class_name: str) -> List[str]:
+    LOGGER.info(
+        "Making functions for class {}".format(class_name)
+    )
+
+
+def make_signals(signals: List[str], class_name: str) -> List[str]:
+    LOGGER.info(
+        "Making signals for class {}".format(class_name)
+    )
+
+    signal_items: List[Dict] =[]
+
+    for signal in signals:
+        signal_signature: str = ".. _class{}_signal{}:".format(class_name, signal.name)
+        # for 
+
+
+def make_enums(element: List[str], class_name: str) -> List[str]:
+    LOGGER.info(
+        "Making enums for class {}".format(class_name)
+    )
+
+
+def make_constants(element: List[str], class_name: str) -> List[str]:
+    LOGGER.info(
+        "Making constants for class {}".format(class_name)
+    )
+
+
 
 def make_comment(text: str) -> str:
     """
