@@ -221,20 +221,20 @@ def make_func_table(funcs: List[str], class_name: str) -> List[str]:
                                                     )
                                                 )
         if func.arguments:
-            for arg in func.arguments:
-                arg_type: str = None
-                arg_default: str = None
-                if arg.type == "null" or arg_type == "void":
-                    arg_type = arg.type
-                else:
-                    arg_type = make_link(arg.type)
-                arg_default = " = {}".format(arg.default) if arg.default != "" else arg.default
-                argument: str = "{}: {}{}".format(arg.name, arg_type, arg_default)
+            func_call.extend(make_arguments(func.arguments))
+            # for arg in func.arguments:
+            #     arg_type: str = None
+            #     arg_default: str = None
+            #     if arg.type == "null" or arg_type == "void":
+            #         arg_type = arg.type
+            #     else:
+            #         arg_type = make_link(arg.type)
+            #     arg_default = " = {}".format(arg.default) if arg.default != "" else arg.default
+            #     argument: str = "{}: {}{}".format(arg.name, arg_type, arg_default)
 
-                func_call.append(argument)
-                func_call.append(", ")
-            func_call.pop() # get rid of the last comma
-        
+            #     func_call.append(argument)
+            #     func_call.append(", ")
+            # func_call.pop() # get rid of the last comma        
         func_call.append(" **)**")
 
         table_items.append({"func_call": ''.join(func_call), "ret_type": ret_type})
@@ -264,7 +264,6 @@ def make_func_table(funcs: List[str], class_name: str) -> List[str]:
 
 
 def make_element(attribute: str, element: List[str], class_name: str) -> List[str]:
-
 
     switcher = {
         "members": lambda : make_members(element, class_name),
@@ -312,6 +311,28 @@ def make_constants(element: List[str], class_name: str) -> List[str]:
     )
 
 
+def make_arguments(arguments: List[str]) -> List[str]:
+    arg_list: list[str] = []
+    for arg in arguments:
+        arg_type: str = None
+        arg_default: str = None
+        # if "type" in arg:
+        if arg.type == "null" or arg_type == "void":
+            arg_type = arg.type
+        else:
+            arg_type = make_link(arg.type)
+
+        # if "default" in arg: 
+        arg_default = " = {}".format(arg.default) if arg.default != "" else arg.default
+        
+        argument: str = "{}: {}{}".format(arg.name, arg_type, arg_default)
+
+        arg_list.append(argument)
+        arg_list.append(", ")
+    
+    arg_list.pop() # get rid of the last comma before sending back
+    return arg_list
+    
 
 def make_comment(text: str) -> str:
     """
