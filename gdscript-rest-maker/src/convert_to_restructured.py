@@ -16,7 +16,7 @@ from .make_restructured import (RestructuredDocument, RestructuredSection,
                                 make_heading, make_link, make_table_header,
                                 make_table_row, surround_with_html,
                                 wrap_in_newlines, make_prop_table,
-                                make_func_table)
+                                make_element, make_func_table)
 
 
 def convert_to_restructured(
@@ -69,10 +69,10 @@ def _as_restructured(
         content += [*RestructuredSection("Description", 2, [description]).as_text()]
 
     content += _write_class(classes, gdscript, 2)
-    if gdscript.signals:
-        content += RestructuredSection(
-            "Signals", 2, _write_signals(classes, gdscript)
-        ).as_text()
+    # if gdscript.signals:
+    #     content += RestructuredSection(
+    #         "Signals", 2, _write_signals(classes, gdscript)
+    #     ).as_text()
 
     if gdscript.sub_classes:
         content += make_heading("Sub-classes", 2)
@@ -131,20 +131,21 @@ def _write(
     assert hasattr(gdscript, attribute)
     
     restructured: List[str] = []
+    element = getattr(gdscript, attribute)
     if table:
-        element = getattr(gdscript, attribute)
         if attribute == "members":
             restructured.extend(make_prop_table(element, gdscript.name))
         else:
             restructured.extend(make_func_table(element, gdscript.name))
     else:
-        for element in getattr(gdscript, attribute):
-            restructured.extend(make_heading(element.get_heading_as_string(), heading_level))
-            restructured.extend([make_code_block(element.signature), ""])
-            restructured.extend(element.get_unique_attributes_as_restructured())
-            restructured.append("")
-            description: str = _replace_references(classes, gdscript, element.description)
-            restructured.append(description)
+        make_element(attribute, element, gdscript.name)
+        # for element in getattr(gdscript, attribute):
+        #     # restructured.extend(make_heading(element.get_heading_as_string(), heading_level))
+        #     restructured.extend([make_code_block(element.signature), ""])
+        #     restructured.extend(element.get_unique_attributes_as_restructured())
+        #     restructured.append("")
+        #     description: str = _replace_references(classes, gdscript, element.description)
+        #     restructured.append(description)
 
     return restructured
 
