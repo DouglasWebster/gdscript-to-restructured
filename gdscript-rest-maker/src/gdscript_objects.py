@@ -203,11 +203,12 @@ class Function(Element):
 
     @staticmethod
     def _get_arguments(data: List[dict]) -> List[Argument]:
+        args: List[Argument] = []
         for entry in data:
             if not "default_value" in entry:
                 entry["default_value"] = ""
-            return [Argument(entry["name"], entry["type"], entry["default_value"])]
-    
+            args.append(Argument(entry["name"], entry["type"], entry["default_value"]))
+        return args
 
 @dataclass
 class Enumeration(Element):
