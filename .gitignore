@@ -30,6 +30,7 @@ docs/source/api/
 
 # reStructured extension ignores
 **/_build
+godot-design-patterns/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
