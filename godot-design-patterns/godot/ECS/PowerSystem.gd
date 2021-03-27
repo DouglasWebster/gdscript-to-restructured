@@ -25,7 +25,7 @@ func setup(power_sources: Array, power_receivers: Array, tilemap: TileMap) -> vo
 				path.push_back(receiver)
 
 
-func update(delta: float) -> void:
+func update(delta: float = 0.0) -> void:
 	receivers_already_provided.clear()
 
 	for path in paths:
