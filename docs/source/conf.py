@@ -22,7 +22,7 @@ copyright = '2021, Douglas S Webster'
 author = 'Douglas S Webster'
 
 # The full version, including alpha/beta/rc tags
-version = '0.0.1'
+version = '0.1.0'
 release = version
 
 pygments_style = 'sphinx'
