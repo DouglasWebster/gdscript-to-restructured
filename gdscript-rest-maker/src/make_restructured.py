@@ -1,5 +1,6 @@
 """General functions and utilities to write reStructured documents.
 """
+from argparse import RawDescriptionHelpFormatter
 from os import name
 import re
 import json
@@ -88,17 +89,17 @@ def make_heading(line: str, level: int = 1) ->List[str]:
     return ["", line, heading_marker, ""]
 
 
-def escape_markdown(text: str) -> str:
-    """Escapes characters that have a special meaning in markdown, like *_-"""
-    # characters: str = "*_-+`"
-    # for character in characters:
-    #     text = text.replace(character, '\\' + character)
-    # return text
-    return text.translate(str.maketrans({
-                                        "*": r"\*",
-                                        "_": r"\_",
-                                        "-": r"\-"
-                                        }))
+# def escape_markdown(text: str) -> str:
+#     """Escapes characters that have a special meaning in markdown, like *_-"""
+#     # characters: str = "*_-+`"
+#     # for character in characters:
+#     #     text = text.replace(character, '\\' + character)
+#     # return text
+#     return text.translate(str.maketrans({
+#                                         "*": r"\*",
+#                                         "_": r"\_",
+#                                         "-": r"\-"
+#                                         }))
 
 
 def make_bold(text: str) -> str:
@@ -124,6 +125,9 @@ def make_code_block(text: str, language: str = "gdscript") -> str:
 
 
 def make_link(description: str) -> str:
+    if description == "var" or description == 'void':
+        return description
+
     api_key: str = description.lower()
     if api_key in api_ref:
         LOGGER.info(
@@ -163,7 +167,7 @@ def make_prop_table(props: List[str], class_name: str) -> List[str]:
     default_length: int = 7
     for prop in props:
         prop_exported = "**export**" if prop.is_exported else ""
-        prop_type: str = "var" if prop.type == "var" else make_link(prop.type)
+        prop_type: str = make_link(prop.type)
         prop_name: str = ":ref:`{}<class_{}_property_{}>`".format(
                                                             prop.name.lower(),
                                                             class_name,
@@ -275,40 +279,156 @@ def make_element(attribute: str, element: List[str], class_name: str) -> List[st
     return switcher.get(attribute, lambda: List("ERROR: attribute not known"))()
 
 
-def make_members(element: List[str], class_name: str) -> List[str]:
+def make_members(members: List[str], class_name: str) -> List[str]:
     LOGGER.info(
         "Making members for class {}".format(class_name)
     )
+    members_lines: List[str] = []
+    for member in members:
+        no_default: bool = True if member.default_value == None else False
+        member_default: str = None if no_default else "``{}``".format(member.default_value)
+        if member_default == '````':
+            member_default = '*member has no default setting*'
+        no_getter: bool = True if member.getter == '' else False
+        member_getter: str = None if no_getter else "{}()".format(member.getter)
+        no_setter: bool = True if member.setter == '' else False
+        member_setter: str = None if no_setter else "{}(val)".format(member.setter)
+        member_lines: List[str] = []
+        member_lines.append('.. _class_{}_property_{}:\n'.format(class_name, member.name))
+        member_lines.append('- **{}** : {}\n'.format(
+                                            member.name,
+                                            make_link(member.type)))
+        
+        if not (no_default and no_getter and no_setter):
+            def_len = len(member_default) if member_default else 0
+            set_len = len(member_setter) if member_setter else 0
+            get_len = len(member_getter) if member_getter else 0
+
+            table_arg_width = max(def_len, set_len, get_len)
+            table_seperator = "+-----------+-{}-+".format('-' * table_arg_width)
+            member_lines.append(table_seperator)
+            if not no_default:
+                member_lines.append("| *Default* | {} |".format(member_default + \
+                    " " * (table_arg_width - len(member_default))))
+                member_lines.append(table_seperator)
+            if not no_setter:
+                member_lines.append("| *Setter*  | {} |".format(member_setter + \
+                    " " * (table_arg_width - len(member_setter))))
+                member_lines.append(table_seperator)
+            if not no_getter:
+                member_lines.append("| *Getter*  | {} |".format(member_getter + \
+                    " " * (table_arg_width - len(member_getter))))
+                member_lines.append(table_seperator)
+            member_lines.append('\n')
+            
+
+        member_lines.append('{}\n'.format(member.description))
+        member_lines.append('----\n')
+
+        members_lines.extend(member_lines)
+
+    members_lines.pop()
+    return members_lines
 
 
-def make_functions(element: List[str], class_name: str) -> List[str]:
+def make_functions(functions: List[str], class_name: str) -> List[str]:
     LOGGER.info(
         "Making functions for class {}".format(class_name)
     )
+    function_lines: List[str] =[]
+    for function in functions:
+        function_lines.append('.. _class_{}_method_{}:\n'.format(class_name, function.name))
+        function_line: List[str] = []
+        function_line.append('- {} **{}(** '.format(function.kind.name, function.name))
+        
+        if function.arguments:
+            function_line.extend(make_arguments(function.arguments))
+        
+        function_line.append(' **)**')
+        
+        if function.return_type:
+            function_line.append(' -> {}'.format(make_link(function.return_type)))
+        
+        function_lines.append('{}\n'.format(''.join(function_line)))
+        function_lines.append('{}\n'.format(function.description))
+        function_lines.append('----\n')
 
+    function_lines.pop()
+    return function_lines
 
 def make_signals(signals: List[str], class_name: str) -> List[str]:
     LOGGER.info(
         "Making signals for class {}".format(class_name)
     )
 
-    signal_items: List[Dict] =[]
-
+    signal_lines: List[str] =[]
     for signal in signals:
-        signal_signature: str = ".. _class{}_signal{}:".format(class_name, signal.name)
-        # for 
+        signal_line: List[str] = []
+        signal_line.append("_ **{}** **(** ".format( signal.name))
+        signal_line.append('')
+        signal_args: List[str] = []
+        for argument in signal.arguments:
+            signal_args.append("{}".format(argument))
+            signal_args.append(", ")
+        if signal_args: 
+            signal_args.pop()
+            signal_line.extend(signal_args)
+
+        signal_line.append(" **)**")   
+    
+        signal_lines.append('.. _class_{}_signal_{}:'.format(class_name, signal.name))
+        signal_lines.append('')
+        signal_lines.append(''.join(signal_line))
+        signal_lines.append('')
+        signal_lines.append(signal.description)
+        signal_lines.append('')
+        signal_lines.append('____')
+
+    signal_lines.pop() # remove last line separator
+
+    return signal_lines
 
 
-def make_enums(element: List[str], class_name: str) -> List[str]:
+def make_enums(enumerations: List[str], class_name: str) -> List[str]:
     LOGGER.info(
         "Making enums for class {}".format(class_name)
     )
+    enum_lines: List[str] = []
+    for enums in enumerations:
+        enum_lines.append('.. _enum_{}_{}:'.format(class_name, enums.name))
+        enum_lines.append('')
+        for val in enums.values:
+            enum_lines.append('.. _class_{}_constant_{}:'.format(class_name, val))
+            enum_lines.append('')
+        enum_lines.append('enum **{}** :'.format(enums.name))
+        enum_lines.append('')
+        for enum in enums.values:
+            enum_lines.append('- **{}** = **{}**'.format(enum, enums.values[val]))
+        enum_lines.append('\n{}'.format(enums.description))
+        enum_lines.append('')
+        enum_lines.append('----')
+        enum_lines.append('')
+
+    enum_lines.pop() # remove empty line an previious line serarator
+    enum_lines.pop()
+
+    return enum_lines  
 
 
-def make_constants(element: List[str], class_name: str) -> List[str]:
+
+
+def make_constants(constants: List[str], class_name: str) -> List[str]:
     LOGGER.info(
         "Making constants for class {}".format(class_name)
     )
+    const_lines: List[str] = []
+    for sigs in constants:
+        const_lines.append('.. _class_{}_constant_{}:\n'.format(class_name, sigs.name))
+    for const in constants:
+       const_lines.append('- **{}** :{} = **{}** --- {}\n'.format(const.name, const.type, const.default_value, const.description.replace('\n', '')))
+
+    return const_lines
+
 
 
 def make_arguments(arguments: List[str]) -> List[str]:
