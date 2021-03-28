@@ -129,9 +129,9 @@ def make_link(description: str) -> str:
         LOGGER.info(
             "found ref, link is {}".format(api_ref[api_key])
         )
-        return ":godot_class:`{} <{}>`".format(description, description.lower())
+        return ":godot_class:`{} <{}>`".format(description, description)
     else:
-        link_target = "class_" + description.lower()
+        link_target = "class_" + description
         return ":ref:`{} <{}>`".format(description, link_target)
 
 
@@ -217,7 +217,7 @@ def make_func_table(funcs: List[str], class_name: str) -> List[str]:
         func_call.append(":ref:`{}<class_{}_method_{}>` **(** ".format(
                                                     func.name,
                                                     class_name,
-                                                    func.name.lower()
+                                                    func.name
                                                     )
                                                 )
         if func.arguments:
