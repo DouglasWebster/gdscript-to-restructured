@@ -138,7 +138,7 @@ def _write(
         else:
             restructured.extend(make_func_table(element, gdscript.name))
     else:
-        make_element(attribute, element, gdscript.name)
+        restructured.extend(make_element(attribute, element, gdscript.name))
         # for element in getattr(gdscript, attribute):
         #     # restructured.extend(make_heading(element.get_heading_as_string(), heading_level))
         #     restructured.extend([make_code_block(element.signature), ""])
