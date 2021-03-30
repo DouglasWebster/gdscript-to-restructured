@@ -403,7 +403,7 @@ def make_enums(enumerations: List[str], class_name: str) -> List[str]:
         enum_lines.append('enum **{}** :'.format(enums.name))
         enum_lines.append('')
         for enum in enums.values:
-            enum_lines.append('- **{}** = **{}**'.format(enum, enums.values[val]))
+            enum_lines.append('- **{}** = **{}**'.format(enum, enums.values[enum]))
         enum_lines.append('\n{}'.format(enums.description))
         enum_lines.append('')
         enum_lines.append('----')
