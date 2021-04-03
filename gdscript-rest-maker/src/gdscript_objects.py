@@ -81,7 +81,11 @@ def extract_metadata(description: str) -> Tuple[str, Metadata]:
             description_trimmed.append(re.sub('^ ', '', line).rstrip())
     
     metadata: Metadata = Metadata(tags, category)
-    return "\n".join(description_trimmed), metadata
+
+    rebuilt_description: str = "\n".join(description_trimmed)
+    description_double_breaks_only: str = re.sub(r"(?<!\n)\n(?!\n)", " ", rebuilt_description)
+
+    return description_double_breaks_only, metadata
 
 class FunctionTypes(Enum):
     METHOD = 1
