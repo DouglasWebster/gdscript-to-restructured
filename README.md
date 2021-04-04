@@ -238,3 +238,13 @@ This enable external links using a shorthand link name.  Now add the following t
 }
 ```
 Now, if you do ```make clean``` to get rid of the bad build followed by ```make html``` you should have a working copy of your documentation with all the external links active.
+
+## Final thoughts
+
+Whilst the above will give a working copy it uses the default settings which I personally don't find very appealing. Included in this repository is a docs directory which contains a bare Sphinx setup which will give you the basis for a document style that gives the same look and feel as the Godot documentation page.
+
+If you inspect the index.html file you will see it split into three sections.  The first two are just dummy example place holders for anything that might come before the API and the third one is the one I use for the API's.  When I create the reStructuredText files I send the output to docs/source/api which then keeps a tidier file system that can be cleaned out or overwritten at will.
+
+(In essence a the docs directory is a copy of the Godot docs Sphinx setup from their docs repository with a few minor alterations.  For those of you wanting to see how a full Sphinx documentation system can be built then pulling apart the Godot docs repository can be very enlightening.)
+
+My thanks go to [**GDQuest**](https://www.gdquest.com/) for the excellent work in creating a documenting tool that was relative easy to build upon for my own needs.
