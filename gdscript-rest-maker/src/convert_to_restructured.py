@@ -1,6 +1,6 @@
 """
 Uses the parsed GDScriptClasses dictionary parsed from the JSON
-data to output the reStructured text documents
+data to output the reStructuredText documents
 """
 
 import json
@@ -24,8 +24,8 @@ def convert_to_restructured(
 ) -> List[RestructuredDocument]:
     """
     Takes a list of dictionaries, each one representing a GDScript class
-    and  converts it to reStructured text.  It returns a list of
-    reStructured text documents.
+    and  converts it to reStructuredText.  It returns a list of
+    reStructuredText documents.
     """
     restructured: List[RestructuredDocument] = []
     if arguments.make_index:
@@ -38,7 +38,7 @@ def _as_restructured(
     classes: GDScriptClasses, gdscript: GDScriptClass, arguments: Namespace
 ) -> RestructuredDocument:
     """
-    Converts the data from a GDScript class into restructured text.
+    Converts the data from a GDScript class into reStructuredText.
     """
 
     content: List[str] = []

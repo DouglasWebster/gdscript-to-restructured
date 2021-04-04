@@ -66,7 +66,7 @@ def wrap_in_newlines(restructured: List[str] = []) -> List[str]:
 
 def make_heading(line: str, level: int = 1) ->List[str]:
     """
-    reStructured text headings are not well assigned but the convention
+    reStructuredText headings are not well assigned but the convention
     followed is  
         # with overline, for parts
 
