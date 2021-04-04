@@ -9,7 +9,7 @@ The code is based on the [gdscript-docs-maker code](https://github.com/GDQuest/g
 
 ## Installation
 
-No installation is necessary if this is a fork of the repository otherwise you should install gdscript2rest from pypi
+No installation is necessary if this is a fork of the repository otherwise you should install gdscript2rest from [PyPI](https://pypi.org)
  ## Additional requirements
 
 In order to make the links from the Godot class names to the Godot API help files a link file has to be created and available to in the working directory of the program.  This can be accomplished by installing a small utility [godot-api-refs](https://pypi.org/project/godot-api-refs/) and running it in from the current working directory.
@@ -45,18 +45,18 @@ To see a list of the options.  Please note that the -a and -f options do nothing
 To create the ***re*****Structured*****Text*** documents it is sufficient to run
 
 ``` 
-python -m gdscript-rest-maker $ReferenceFile.json
+python -m gdscript2rest $ReferenceFile.json
 ```
 where $ReferenceFile.json is the path to the file created in Stage 1.  The program will output the files in a subdirectory called ***export***.
 
 If you run 
 ```
-python -m gdscript-rest-maker -h
+python -m gdscript2rest -h
 ```
 
 it will display the following which lists the options available to the program.
 ```
-usage: gdscript-rest-maker [-h] [-p PATH] [-i] [-v] [--dry-run] [-V] files [files ...]
+usage: gdscript2rest [-h] [-p PATH] [-i] [-v] [--dry-run] [-V] files [files ...]
 
 Converts JSON data dumped by Godot's GDScript language server to create .rst files for 
 use with Sphinx.
@@ -149,7 +149,7 @@ sphinx-test/
 
 The create the ***re*****Structured*****Text*** files with 
 ```
-python -m gdscript-rest-maker reference.json -p docs/source -i
+python -m gdscript2rest reference.json -p docs/source -i
 ```
 The -i will overwrite the index file with one that globs all the created API files.  This should give the following files structure w.
 ```

@@ -13,7 +13,7 @@ from argparse import ArgumentParser, Namespace
 
 def parse(args=sys.argv) -> Namespace:
     parser: ArgumentParser = ArgumentParser(
-        prog = "gdscript-rest-maker",
+        prog = "gdscript2rest",
         description="Converts JSON data dumped by Godot's "
         "GDScript language server to create .rst files for "
         "use with Sphinx.",
