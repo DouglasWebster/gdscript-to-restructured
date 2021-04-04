@@ -20,6 +20,7 @@ data_*/
 .tmp/
 .vscode/
 scratchpad/
+sphinx-test/
 
 # doc ignores
 docs/build/
