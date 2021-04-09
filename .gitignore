@@ -20,12 +20,18 @@ data_*/
 .tmp/
 .vscode/
 scratchpad/
+sphinx-test/
 
 # doc ignores
 docs/build/
-docs/source/module_exports/
+docs/source/api/
 **/export
 **/reference.json
+**/godot_api_calls.json
+
+# reStructured extension ignores
+**/_build
+godot-design-patterns/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -54,6 +60,7 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+token.txt
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -165,3 +172,4 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+docs/source/icon_penguinjump.png

@@ -32,7 +32,15 @@ def main():
     for f in json_files:
         with open(f,"r") as json_file:
             data: list = json.loads(json_file.read())
+            
+            if data["version"] == None:
+                LOGGER.info(
+                    "Project has no version number - setting it to {}".format(args.doc_version)
+                )
+                data["version"] = args.doc_version
+
             project_info: ProjectInfo = ProjectInfo.from_dict(data)
+
             classes: GDScriptClasses = GDScriptClasses.from_dict_list(data["classes"])
             classes_count: int = len(classes)
 

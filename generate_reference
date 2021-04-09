@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 project_directory="$1"
-output_directory="export"
+output_directory="."
 directories_override=""
 format="markdown"
 author="developer"
@@ -128,7 +128,9 @@ fi
 rm -v "$godot_project_dir/$(basename $path_ref_collector)"
 rm -v "$godot_project_dir/$(basename $path_collector)"
 
-cp -v $godot_project_dir/reference.json ./reference.json
+! test -d "$output_dir" && mkdir -v "$output_directory"
+
+mv -v $godot_project_dir/reference.json $output_directory/reference.json
 
 # Generate markdown files
 # echo "Generating markdown files in $output_directory"
