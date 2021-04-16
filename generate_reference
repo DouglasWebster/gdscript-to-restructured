@@ -1,43 +1,47 @@
 #!/usr/bin/env sh
 
 project_directory="$1"
-output_directory="."
+output_directory="entities"
 directories_override=""
-format="markdown"
-author="developer"
+create_index=""
+verbosity_level=""
+get_version=""
+doc_version=""
 
 echo_help() {
 	echo '
-    Generate a code reference from GDScript
+    Generate reST file references from GDScript
     Usage:
     generate_reference $project_directory [options]
 
     Required arguments:
 
     $project_directory -- path to your Godot project directory.
-    This directory or one of its subdirectories should contain a
-    project.godot file.
+
+    This directory or one of its subdirectories should contain a project.godot file.
 
     Options:
 
     -h/--help             -- Display this help message.
     -o/--output-directory -- directory path to output the documentation into.
     -d/--directory        -- Name of a directory to find files and generate the code reference in the Godot project. You can use the option multiple times to generate a reference for multiple directories.
-    -f/--format           -- Either `markdown` or `hugo`. If `hugo`, the output document includes a TOML front-matter at the top. Default: `markdown`.
-    -a/--author           -- If --format is `hugo`, controls the author property in the TOML front-matter.
-
+    -i/                   -- Create a reST index file in the output directory that references all the API reST files.
+    -v/--verbose          -- Set the verbosity level. For example -vv sets verbosity to level 2. Defalt: 0.
+    -V/--version          -- Print the version number and exit.
+    --doc-version         -- Set the document version number if there is no version set in the JSON file. Defaults to 0.0.0
 
     Usage example:
 
-    generate_reference ~/Repositories/other/nakama-godot/project/ -o export-nakama -d addons
+    generate_reference ~/Repositories/other/nakama-godot/project/ -o docs/source/api/addons -d addons -i -v --doc-version 0.1.5
 
-    This command walks files in the res://addons directory of the Godot Nakama project, and converts it
-    to markdown files output in ./export-nakama.
+    This command walks files in the res://addons directory of the Godot Nakama project, and stores the resultant code dump
+    in the docs/source/api/addons directory of the current pwd.  It then invokes gdscript2rest and creates the reST files
+    in the same directory, detailing each file processed, creating an index file and setting the version to 0.1.5
     '
 	exit 0
 }
 
-arguments=$(getopt --name "generate_reference" -o "h,o:,d:,f:,a:" -l "help,output-directory:,directories:" -- "$@")
+arguments=$(getopt --name "generate_reference" -o "h,o:,d:,i,v::,V" -l "help,output-directory:,directory:,verbose, doc-version:" -- "$@")
 eval set -- "$arguments"
 while true; do
 	case "$1" in
@@ -47,21 +51,38 @@ while true; do
 		;;
 	-o | --output-directory)
 		output_directory=$2
+		echo setting output directory to $output_directory
 		shift 2
 		;;
 	-d | --directory)
 		directories_override="$directories_override $2"
 		shift 2
 		;;
-	-f | --format)
-		format=$2
+    -i)
+        create_index=$1
+        shift
+        ;;
+
+	-v)
+		verbosity_level=$1$2
 		shift 2
 		;;
-	-a | --author)
-		author=$2
+	 
+	--verbose)
+		verbosity_level=$1
+		shift 1
+		;;
+
+	-V | --version)
+		get_version=$1
+		shift 1
+		;;
+
+	--doc-version)
+		doc_version="--doc-version $2"
 		shift 2
 		;;
-		
+
 	--)
 		shift
 		break
@@ -128,12 +149,11 @@ fi
 rm -v "$godot_project_dir/$(basename $path_ref_collector)"
 rm -v "$godot_project_dir/$(basename $path_collector)"
 
-! test -d "$output_dir" && mkdir -v "$output_directory"
+! test -d "$output_dir" && mkdir -v -p "$output_directory"
 
 mv -v $godot_project_dir/reference.json $output_directory/reference.json
 
 # Generate markdown files
-# echo "Generating markdown files in $output_directory"
-# ! test -d "$output_directory" && mkdir -v "$output_directory"
+echo "Generating reStructuredText files in $output_directory with options --path $output_directory $create_index $verbosity_level $get_version $doc_version"
 
-# python3 -m gdscript_docs_maker "$godot_project_dir/reference.json" --path $output_directory --format $format --author $author
+python3 -m gdscript2rest "$output_directory/reference.json" --path $output_directory $create_index $verbosity_level $get_version $doc_version

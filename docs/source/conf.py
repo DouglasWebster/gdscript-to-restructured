@@ -18,8 +18,8 @@ import sys
 # -- Project information -----------------------------------------------------
 
 project = 'GDScript to reStructured'
-copyright = '2021, Douglas S Webster'
-author = 'Douglas S Webster'
+copyright = '2021, GDScript'
+author = 'Nathan Lavato'
 
 # The full version, including alpha/beta/rc tags
 version = '0.1.0'
