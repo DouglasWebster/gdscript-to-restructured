@@ -9,7 +9,9 @@ The code is based on the [gdscript-docs-maker code](https://github.com/GDQuest/g
 
 ## Installation
 
-No installation is necessary if this is a fork of the repository otherwise you should install gdscript2rest from [PyPI](https://pypi.org)
+You should install gdscript2rest from [PyPI](https://pypi.org) with 
+
+`python -m pip install gdscript2rest` 
  ## Additional requirements
 
 In order to make the links from the Godot class names to the Godot API help files a link file has to be created and available to in the working directory of the program.  This can be accomplished by installing a small utility [godot-api-refs](https://pypi.org/project/godot-api-refs/) and running it in from the current working directory.
@@ -17,37 +19,89 @@ In order to make the links from the Godot class names to the Godot API help file
 ---
 ## Usage
 
+There are 2 scripts in the repository:
+* generate_reference     - for Linux and Mac (though the script is untested on a Mac)
+* generate_reference.bat - for windows in a cmd prompt (it doesn't seem to work in a powershell terminal)
+
+Both scripts will generate the documentation in the desired folder.
+
+### Linux and Mac
+
+Running `./generate_reference -h` will give the following
+
+```
+    Generate reST file references from GDScript
+    Usage:
+    generate_reference $project_directory [options]
+
+    Required arguments:
+
+    $project_directory -- path to your Godot project directory.
+
+    This directory or one of its subdirectories should contain a project.godot file.
+
+    Options:
+
+    -h/--help             -- Display this help message.
+    -o/--output-directory -- directory path to output the documentation into.
+    -d/--directory        -- Name of a directory to find files and generate the code reference in the Godot project. You can use the option multiple times to generate a reference for multiple directories.
+    -i/                   -- Create a reST index file in the output directory that references all the API reST files.
+    -v/--verbose          -- Set the verbosity level. For example -vv sets verbosity to level 2. Defalt: 0.
+    -V/--version          -- Print the version number and exit.
+    --doc-version         -- Set the document version number if there is no version set in the JSON file. Defaults to 0.0.0
+
+    Usage example:
+
+    generate_reference ~/Repositories/other/nakama-godot/project/ -o docs/source/api/addons -d addons -i -v --doc-version 0.1.5
+
+    This command walks files in the res://addons directory of the Godot Nakama project, and stores the resultant code dump in the docs/source/api/addons directory of the current pwd.  It then invokes gdscript2rest and creates the reST files in the same directory, detailing each file processed, creating an index file and setting the version to 0.1.5
+```
+
+### Windows
+
+(still in development)
+
+## Detailed explanation 
+
 The generation of the ***re*****Structured*****Text*** files is a two step process.
 
 1. Create a JSON file that contains all the information extracted from your Godot project script files.
 2. Turn each of the separate classes in the JSON file that contains a class_name qualifier into a separate ***re*****Structured*****Text*** file.
 
-
+The above script automates the two processes which can be accomplished individually by: 
 ## Stage 1 - Create the JSON file
 
-This is accomplished using the scripts available at [GDQuest gdscript-docs-maker](https://github.com/GDQuest/gdscript-docs-maker/tree/master/godot-scripts).  A copy of them is available in this repository under the godot-scripts folder but there is no guarantee that these scripts are up to date. For the latest use and for detailed instructions please refer to the original source repository.
+This is done in the `generate_reference` script by:
 
-Also included in this repository is the script generate_reference.  This is a bash script which has been copied from the GDQuest repository but has been altered to stop at producing the .json file. To use it enter
-```
-generate_reference $Godot-Project-Directory [options]
-```
-to create a file ***reference.json*** in the current working directory of your game project located in the ***$Godot-Project-Directory***
+1.  Copying the GDScript files `./godot-scripts/Collector.gd` and `./godot-scripts/ReferenceCollectorCLI.gd` or `./godot-scripts/ReferenceCollectorCLI.gd` to your Godot 3.3 project.
+2. Running the GDScript code in the project with Godot
+3. Removing the godot-scripts files that were initially copied over.
 
-Run
-```
-generate_reference -h
-```
-To see a list of the options.  Please note that the -a and -f options do nothing in the enclosed version of the script.
+This leaves a copy of the ***reference.json*** file in the Godot project directory.
 
+(The $project_directory and -d/--directory options are applicable to this stage)
+
+A fuller explanation of this stage is detailed at  [gdscript-docs-maker code](https://github.com/GDQuest/gdscript-docs-maker) 
 
 ## Stage 2 - Create the reStructuredText documents
 
-To create the ***re*****Structured*****Text*** documents it is sufficient to run
+This is done in the `generate_reference` script by:
 
-``` 
-python -m gdscript2rest $ReferenceFile.json
-```
-where $ReferenceFile.json is the path to the file created in Stage 1.  The program will output the files in a subdirectory called ***export***.
+1. Moving the ***reference.json*** file from the Godot project directory to the output_directory, creating the output_directory if required
+2. Running `python -m gdscript2rest $ReferenceFile [options]` where $ReferenceFile is the file created in part 1 and the options are the remaining unused options.  
+
+
+## Detailed explanation of the gdscritp2rest python module
+
+`gdscript2rest` is a python module that scans the reference.json file and creates individual reStructuredText files for each individual class enumerated in the file.  
+
+The individual files have full linkages to:
+
+* code inside the file i.e variable use in a function declaration to the variable declaration
+* code in the same project i.e the parent class in a state machine.
+* the Godot help system.  i.e. the declaration Extends: Node2D, the Node2d links to the Godot help file
+
+
 
 If you run 
 ```
