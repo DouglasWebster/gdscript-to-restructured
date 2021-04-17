@@ -25,9 +25,9 @@ There are 2 scripts in the repository:
 
 Both scripts will generate the documentation in the desired folder.
 
-### Linux and Mac
+## Linux and Mac
 
-Running `./generate_reference -h` will give the following
+Running `./generate_reference -h` in a terminal will give the following
 
 ```
     Generate reST file references from GDScript
@@ -57,10 +57,37 @@ Running `./generate_reference -h` will give the following
     This command walks files in the res://addons directory of the Godot Nakama project, and stores the resultant code dump in the docs/source/api/addons directory of the current pwd.  It then invokes gdscript2rest and creates the reST files in the same directory, detailing each file processed, creating an index file and setting the version to 0.1.5
 ```
 
-### Windows
+## Windows
 
-(still in development)
+Running `generate_reference.bat -h` in a cmd window will give the following
 
+```
+Creates and parses reference documentation for a GDScript based projects.
+
+generate_reference path\to\godot\project [-p dest] [-v ^| -vv] [--dry-run] [-i] [-V] [--doc-version]
+
+  -h --help           Display this help file.
+
+  -p --path dest      Path to the output directory.
+    
+  -v --verbose        Set the verbosity level. For example, -vv sets the verbosity
+                      level to 2.
+
+  --dry-run           Run the script without actual rendering or creating files
+                      and folders. For debugging purposes
+
+  -i --make-index     If this flag is present, create an index.md page with a table
+                      of contents.
+
+  -V --version        Display the version of the gdscript2rest program
+
+  --doc-version       Set the version number shown in the documentation.  Defaults to
+                      0.0.0 (currently Godot does not output a version number).
+```
+
+The commands are the same as the Linux/Mac version except there is no option to cherry pick the directories in the Godot project.  This involves changing the ReferenceCollectorCLI.gd file on the fly which I something I don't know how to do in a batch file.
+
+---
 ## Detailed explanation 
 
 The generation of the ***re*****Structured*****Text*** files is a two step process.
@@ -143,6 +170,7 @@ A fuller explanation of the options is:
 *  -V, --version         Print the version number and exit,
 * --doc-version DOC_VERSION :-> Unless I'm missing something Godot doesn't currently have the facility to store a version number so this gives the option to set the version number manually.  If not used the version number defaults to 0.0.0
 
+---
 ## Further Information
 
 For additional information and a brief tutorial on how to use the ***re*****Structured*****Text*** files to create a Sphinx documents site see the [Wiki](https://github.com/DouglasWebster/gdscript-to-restructured/wiki) section of this repository.
