@@ -61,26 +61,23 @@ echo Creates and parses reference documentation for a GDScript based projects.
 echo.
 echo generate_reference path\to\godot\project [-p dest] [-v ^| -vv] [--dry-run] [-i] [-V] [--doc-version]
 echo.
-echo   -h              Display this help file.
-echo     --help
+echo   -h --help           Display this help file.
 echo.
-echo   -p              Path to the output directory.
-echo     --path dest
+echo   -p --path dest      Path to the output directory.     
 echo.
-echo   -v              Set the verbosity level. For example, -vv sets the verbosity
-echo     --verbose     level to 2.
+echo   -v --verbose        Set the verbosity level. For example, -vv sets the verbosity
+echo                       level to 2.
 echo.
-echo   --dry-run       Run the script without actual rendering or creating files
-echo                   and folders. For debugging purposes
+echo   --dry-run           Run the script without actual rendering or creating files
+echo                       and folders. For debugging purposes
 echo.
-echo   -i              If this flag is present, create an index.md page with a table
-echo     --make-index  of contents.
+echo   -i --make-index     If this flag is present, create an index.md page with a table
+echo                       of contents.
 echo.
-echo   -V              Display the version of the gdscript2rest program
-echo     --version
+echo   -V --version        Display the version of the gdscript2rest program
 echo.
-echo   --doc-version   Set the version number shown in the documentation.  Defaults to
-echo                   0.0.0 (currently Godot does not output a version number).
+echo   --doc-version       Set the version number shown in the documentation.  Defaults to
+echo                       0.0.0 (currently Godot does not output a version number).
 echo.
 goto end
 
