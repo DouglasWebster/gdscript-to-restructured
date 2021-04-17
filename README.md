@@ -42,19 +42,28 @@ Running `./generate_reference -h` in a terminal will give the following
 
     Options:
 
-    -h/--help             -- Display this help message.
-    -o/--output-directory -- directory path to output the documentation into.
-    -d/--directory        -- Name of a directory to find files and generate the code reference in the Godot project. You can use the option multiple times to generate a reference for multiple directories.
-    -i/                   -- Create a reST index file in the output directory that references all the API reST files.
-    -v/--verbose          -- Set the verbosity level. For example -vv sets verbosity to level 2. Defalt: 0.
-    -V/--version          -- Print the version number and exit.
-    --doc-version         -- Set the document version number if there is no version set in the JSON file. Defaults to 0.0.0
+    -h/--help               Display this help message.
+    -o/--output-directory   directory path to output the documentation into.
+    -d/--directory          Name of a directory to find files and generate the code reference in
+                            the Godot project. You can use the option multiple times to generate
+                            a reference for multiple directories.
+    -i/                     Create a reST index file in the output directory that references all
+                            the API reST files.
+    -v/--verbose            Set the verbosity level. For example -vv sets verbosity to level 2.
+                            Defalt: 0.
+    -V/--version            Print the version number and exit.
+    --doc-version           Set the document version number if there is no version set in the
+                            JSON file. Defaults to 0.0.0
 
     Usage example:
 
-    generate_reference ~/Repositories/other/nakama-godot/project/ -o docs/source/api/addons -d addons -i -v --doc-version 0.1.5
+    generate_reference ~/Repositories/other/nakama-godot/project/ -o docs/source/api/addons 
+              -d addons -i -v --doc-version 0.1.5
 
-    This command walks files in the res://addons directory of the Godot Nakama project, and stores the resultant code dump in the docs/source/api/addons directory of the current pwd.  It then invokes gdscript2rest and creates the reST files in the same directory, detailing each file processed, creating an index file and setting the version to 0.1.5
+    This command walks files in the res://addons directory of the Godot Nakama project, and 
+    stores the resultant code dump in the docs/source/api/addons directory of the current pwd.
+    It then invokes gdscript2rest and creates the reST files in the same directory, detailing
+    each file processed, creating an index file and setting the version to 0.1.5
 ```
 
 ## Windows
@@ -64,7 +73,9 @@ Running `generate_reference.bat -h` in a cmd window will give the following
 ```
 Creates and parses reference documentation for a GDScript based projects.
 
-generate_reference path\to\godot\project [-p dest] [-v ^| -vv] [--dry-run] [-i] [-V] [--doc-version]
+generate_reference $Path [-p dest] [-v ^| -vv] [--dry-run] [-i] [-V] [--doc-version]
+
+  $Path  The path to the Godot project.   
 
   -h --help           Display this help file.
 
