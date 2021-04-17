@@ -73,7 +73,7 @@ Running `generate_reference.bat -h` in a cmd window will give the following
 ```
 Creates and parses reference documentation for a GDScript based projects.
 
-generate_reference $Path [-p dest] [-v ^| -vv] [--dry-run] [-i] [-V] [--doc-version]
+generate_reference $Path [-p dest] [-v | -vv] [--dry-run] [-i] [-V] [--doc-version]
 
   $Path  The path to the Godot project.   
 
