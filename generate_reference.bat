@@ -189,8 +189,8 @@ goto end
    )
    set param_arg=0
 
-   if !parameters[%param_n%].option! == -p set output_path=%~f1
-   if !parameters[%param_n%].option! == --path set output_path=%~f1
+   if !parameters[%param_n%].option! == -p set output_path="%~f1"
+   if !parameters[%param_n%].option! == --path set output_path="%~f1"
 
    set parameters[!param_n!].param=%~1
    set /A param_n+=1
