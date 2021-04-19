@@ -59,7 +59,7 @@ goto tail
 echo.
 echo Creates and parses reference documentation for a GDScript based projects.
 echo.
-echo generate_reference $Path [-p dest] [-v | -vv] [--dry-run] [-i] [-V] [--doc-version]
+echo generate_reference $Path [-p dest] [-v] [--dry-run] [-i] [-V] [--doc-version]
 echo.
 echo   $Path  The path to the Godot project.    
 echo.
