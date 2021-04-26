@@ -117,7 +117,7 @@ echo Generating reference...
 
 ::Run godot in editor mode and runs the collector script
 
-%godot% -e -q -s --no-window --path "%project_path%" %gdscript_1% > nul
+"%godot%" -e -q -s --no-window --path "%project_path%" %gdscript_1% > nul
 
 ::Clean up
 erase /Q "%project_path%\%gdscript_1%"
