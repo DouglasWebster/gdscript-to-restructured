@@ -9,35 +9,44 @@ get_version=""
 doc_version=""
 
 echo_help() {
-	echo '
-    Generate reST file references from GDScript
-    Usage:
-    generate_reference $project_directory [options]
+	echo "
+Generate reST file references from GDScript
 
-    Required arguments:
+Usage: generate_reference $project_directory [options]
 
-    $project_directory -- path to your Godot project directory.
+Required arguments:
 
-    This directory or one of its subdirectories should contain a project.godot file.
+$project_directory -- path to your Godot project directory.
 
-    Options:
+This directory or one of its subdirectories should contain a project.godot file.
 
-    -h/--help             -- Display this help message.
-    -o/--output-directory -- directory path to output the documentation into.
-    -d/--directory        -- Name of a directory to find files and generate the code reference in the Godot project. You can use the option multiple times to generate a reference for multiple directories.
-    -i/                   -- Create a reST index file in the output directory that references all the API reST files.
-    -v/--verbose          -- Set the verbosity level. For example -vv sets verbosity to level 2. Defalt: 0.
-    -V/--version          -- Print the version number and exit.
-    --doc-version         -- Set the document version number if there is no version set in the JSON file. Defaults to 0.0.0
+Options:
 
-    Usage example:
+-h/--help             -- Display this help message.
+-o/--output-directory -- directory path to output the documentation into.
+-d/--directory        -- Name of a directory to find files and generate the code
+                         reference in the Godot project. You can use the option
+                         multiple times to generate a reference for multiple
+                         directories.
+-i/                   -- Create a reST index file in the output directory that
+                         references all the API reST files.
+-v/--verbose          -- Set the verbosity level. 
+                         For example -vv sets verbosity to level 2. Default: 0.
+-V/--version          -- Print the version number and exit.
+--doc-version         -- Set the document version number if there is no
+                         version set in the JSON file. Defaults to 0.0.0
 
-    generate_reference ~/Repositories/other/nakama-godot/project/ -o docs/source/api/addons -d addons -i -v --doc-version 0.1.5
+Usage example:
 
-    This command walks files in the res://addons directory of the Godot Nakama project, and stores the resultant code dump
-    in the docs/source/api/addons directory of the current pwd.  It then invokes gdscript2rest and creates the reST files
-    in the same directory, detailing each file processed, creating an index file and setting the version to 0.1.5
-    '
+generate_reference ~/Repositories/other/nakama-godot/project/ 
+                    -o docs/source/api/addons -d addons -i -v --doc-version 0.1.5
+
+This command walks files in the res://addons directory of the Godot Nakama
+project, and stores the resultant code dump in the docs/source/api/addons 
+directory of the current pwd.  It then invokes gdscript2rest and creates
+the reST files in the same directory, detailing each file processed, creating
+an index file and setting the version to 0.1.5
+    "
 	exit 0
 }
 
