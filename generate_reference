@@ -9,7 +9,7 @@ get_version=""
 doc_version=""
 
 echo_help() {
-	echo "
+	echo '
 Generate reST file references from GDScript
 
 Usage: generate_reference $project_directory [options]
@@ -46,7 +46,7 @@ project, and stores the resultant code dump in the docs/source/api/addons
 directory of the current pwd.  It then invokes gdscript2rest and creates
 the reST files in the same directory, detailing each file processed, creating
 an index file and setting the version to 0.1.5
-    "
+    '
 	exit 0
 }
 
