@@ -1,7 +1,7 @@
 """
 Merges JSON dumped by Godot's script language server and converts
-it to a rest document formated in the look and feel of the Godot
-API documentaion
+it to a rest document formatted in the look and feel of the Godot
+API documentation
 """
 
 import json

@@ -1,5 +1,5 @@
 """
-Converst the json representation of GDScript 
+Converts the json representation of GDScript 
 classes as dictionaries into objects
 """
 
@@ -403,7 +403,7 @@ def _get_signals(data: List[dict]) -> List[Signal]:
 
 def _get_functions(data: List[dict], is_static: bool = False) -> List[Function]:
     """
-    Returns a list of valid fuctions to put in the class reference.
+    Returns a list of valid functions to put in the class reference.
     Skips built-in virtual callbacks, except for constructor functions marked for
     inclusion, and private methods.
     """

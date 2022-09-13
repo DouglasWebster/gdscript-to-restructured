@@ -1,6 +1,6 @@
 # GDScript reStructuredText Docs Maker
 
-**gdscript2rest** is a tool to document your Godot gdscript files into ***re*****Structured*****Text*** (..rst) files and to create an index of the generated files if required.
+**gdscript2rest** is a tool to document your Godot gdscript files into ***re*****Structured*****Text*** (.rst) files and to create an index of the generated files if required.
 
 The code is based on the [gdscript-docs-maker code](https://github.com/GDQuest/gdscript-docs-maker) from [**GDQuest**](https://www.gdquest.com/) and, in as far as the initial stages of the conversion are concerned, it is a direct copy of their code with a few notable exceptions:
 - This version only provides ***re*****Structured*****Text*** (.rst) output - if you require markdown or Hugo output then please follow the above link and use the original version.
@@ -14,17 +14,19 @@ A JSON file of the Godot projects docstrings has to be created first using eithe
 
 Once the JSON file has been created then the reStructuredText documents can be created by running
 ```
-python3 -m gdscript2rest $JSON-dump.json [options]
+python -m gdscript2rest [options] $JSON-dump.json
 ```
 where $JSON-dump.json is the file created by ```generate-reference```.  
 
-The above command will generate the files required and place them in a folder called export that is a sub folder of the Current Working Directory.  Calling:
-Once the JSON file has been created then the reStructuredText documents can be created by running
+The above command will generate the files required and place them in a folder called export that is a sub folder of the Current Working Directory.
+
+Running
+
 ```
 python3 -m gdscript2rest -h
 ```
 
-will give full program usage with detailing options tailoring the output location and generating an index file.
+will give full program usage with detailing options for tailoring the output location and generating an index file.
 
 My Homepage has full instructions, a mini tutorial wiki's as well as a wiki on creating a Sphinx based webpage of your Games API.
 
