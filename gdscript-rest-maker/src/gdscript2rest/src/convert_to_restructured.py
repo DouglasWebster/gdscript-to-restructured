@@ -54,7 +54,7 @@ def _as_restructured(
         make_comment(
             "Auto-generated from JSON by GDScript restructured maker.\n"
             "Do not edit this document directly as all changes will be\n"
-            "to be overwritten on the next auto-generation." 
+            "overwritten on the next auto-generation." 
         )
         + "\n\n"
         + ".. _{}:".format(doc_ref) 
@@ -98,7 +98,7 @@ def _write_class(
         ("signals", "Signals", False),
         ("enums", "Enumerations", False),
         ("constants", "Constants", False),
-        ("members", "Propertry Descriptions", False),
+        ("members", "Property Descriptions", False),
         ("functions", "Method Descriptions", False),
     ]:
         if not getattr(gdscript, attribute):
