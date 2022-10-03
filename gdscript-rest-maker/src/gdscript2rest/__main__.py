@@ -17,6 +17,7 @@ from .src.config import LOG_LEVELS, LOGGER
 from .src.gdscript_objects import GDScriptClasses, ProjectInfo
 from .src.make_restructured import RestructuredDocument
 from .src.convert_to_restructured import convert_to_restructured
+from .src.utils import ratify_class_name
 
 
 def main():
@@ -74,7 +75,7 @@ def save(
     document: RestructuredDocument,
     dirpath: str
 ):
-    path: str = os.path.join(dirpath, document.get_filename())
+    path: str = os.path.join(dirpath, ratify_class_name(document.get_filename()))
     with open(path, "w") as file_out:
         LOGGER.debug("Saving reStructured file " + path)
         file_out.write(document.as_string())
