@@ -17,6 +17,7 @@ from .make_restructured import (RestructuredDocument, RestructuredSection,
                                 make_table_row, surround_with_html,
                                 wrap_in_newlines, make_prop_table,
                                 make_element, make_func_table)
+from .utils import ratify_class_name
 
 
 def convert_to_restructured(
@@ -176,8 +177,13 @@ def _write_table_of_contents(classes: GDScriptClasses) -> List[str]:
         "    :maxdepth: 1",
         "    :caption: API",
         "    :glob:",
-        "\n    *"
+        "\n"
     ]
+
+    for c in classes.class_index:
+        index_name: str = ratify_class_name(c)
+        LOGGER.info( "Adding index " + index_name)
+        toc.append("    " + index_name)
 
     return toc
 
