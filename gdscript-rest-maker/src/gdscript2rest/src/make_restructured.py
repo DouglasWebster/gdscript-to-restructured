@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from typing import Dict, List, Any
 import logging
 from .config import LOG_LEVELS, LOGGER
+from .utils import ratify_class_name
 
 api_ref = {}
 
@@ -24,7 +25,7 @@ class RestructuredDocument:
     content: List[str]
 
     def get_filename(self):
-        return self.title + ".rst"
+        return ratify_class_name(self.title) + ".rst"
 
     def as_string(self) -> str:
         """
